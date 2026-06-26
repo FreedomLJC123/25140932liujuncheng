@@ -1,0 +1,5 @@
+{
+  "vuln_type": "stack_buffer_overflow",
+  "location": "main @ 0x401382 (call __strcpy_chk)",
+  "cause": "fgets 从 stdin 读最多 128 字节到 local_88，strlen 检查允许长度 ≤100 的输入通过，但 __strcpy_chk(&local_a8, local_88, 0x10) 的目标大小仅 16 字节。输入 16-100 字节时，__strcpy_chk 检测到 dest 空间不足而触发 __chk_fail abort，导致拒绝服务。"
+}
