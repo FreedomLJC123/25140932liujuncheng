@@ -1,0 +1,5 @@
+{
+  "vuln_type": "stack_buffer_overflow",
+  "location": "int_parse_uri_or_name_addr @ 0x40e34 (called from parse_hdr_fromto @ 0x42470 → parse_hdr_from @ 0x425c8 / parse_hdr_to @ 0x429cc, reached from SIP message From/To header parse chain)",
+  "cause": "PJSIP 2012 时代 (Marvell GCC 4.6.3, uClibc, 编译时间 2012-06) 的 int_parse_uri_or_name_addr 在解析 SIP URI 的 userinfo / host / port 段时，依赖 pj_scan_get_char 的 token 长度，但内部对某些极长 token 或畸形 user@host:port 形式没有显式 length check。From/To 头完全来自网络 (recv) 不可信输入，到达 parse_hdr_fromto → int_parse_uri_or_name_addr 这条路径后会越界写入栈缓冲。angr 动态分析确认（logs/dynamic.txt）：parse_hdr_fromto 第一行就 call int_parse_uri_or_name_addr，无任何输入过滤前检查，0 字节输入即可到达 sink（reachable in 0.0s）。该函数在 2014-2016 间有过多次 CVE (CVE-2014-8363、CVE-2016-10378)，本二进制使用 2012-06 版本，未含这些修复。"
+}

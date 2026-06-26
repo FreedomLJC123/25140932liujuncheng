@@ -1,0 +1,7 @@
+openai>=1.40.0
+angr>=9.2.0
+claripy>=9.2.0
+# r2 / Ghidra 12 / JDK 21 are system-level (see README)
+# r2:  brew install radare2
+# Ghidra:  https://github.com/NationalSecurityAgency/ghidra/releases
+# JDK 21:  brew install openjdk@21

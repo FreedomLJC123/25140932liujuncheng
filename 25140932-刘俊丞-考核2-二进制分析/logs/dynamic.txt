@@ -1,0 +1,16 @@
+======================================================================
+Dynamic analysis on /Users/ahs/Documents/文档/sipapp-lab/target/sipapp
+======================================================================
+
+[1/2] parse_hdr_fromto (0x42470) → int_parse_uri_or_name_addr (0x40e34)
+  [dynamic_analysis] from 0x42470 → 0x40e34
+  found=True  active=0  deadended=0  avoided=0  (0.133s)
+
+[2/2] parse_hdr_contact (0x4205c) → int_parse_uri_or_name_addr (0x40e34)
+  [dynamic_analysis] from 0x4205c → 0x40e34
+  found=True  active=47  deadended=0  avoided=0  (5.8s)
+
+======================================================================
+结论：
+  ✓ angr 在 stub 掉 PJSIP 库后能走到 vulnerable sink
+  → 这条路径是 attack surface，可构造恶意 SIP header 触发
